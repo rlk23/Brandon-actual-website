@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -8,8 +8,12 @@ import {
   ListItemText,
   Divider,
   Container,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import { FiCheckCircle } from "react-icons/fi";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/system";
 
 // Hero Section Styling
@@ -83,12 +87,33 @@ const Services = () => {
   ];
 
   const benefits = [
-    "Reduced Costs: Lower operational costs associated with tape storage and management.",
-    "Improved Agility: Increased flexibility and scalability with cloud-based data storage.",
-    "Enhanced Security: Robust cloud security features to safeguard sensitive data.",
-    "Increased Efficiency: Streamlined access and faster retrieval times for seismic data.",
-    "Modernization: Transition to a cutting-edge data storage infrastructure that supports future business growth.",
+    {
+      key: "Reduced Costs",
+      value: "Lower operational costs associated with tape storage and management.",
+    },
+    {
+      key: "Improved Agility",
+      value: "Increased flexibility and scalability with cloud-based data storage.",
+    },
+    {
+      key: "Enhanced Security",
+      value: "Robust cloud security features to safeguard sensitive data.",
+    },
+    {
+      key: "Increased Efficiency",
+      value: "Streamlined access and faster retrieval times for seismic data.",
+    },
+    {
+      key: "Modernization",
+      value: "Transition to a cutting-edge data storage infrastructure that supports future business growth.",
+    },
   ];
+
+  const [expanded, setExpanded] = useState(false);
+
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   return (
     <Box>
@@ -125,21 +150,25 @@ const Services = () => {
           ))}
         </ContentSection>
 
-        {/* Key Benefits Section */}
+        {/* Key Benefits Section with Accordion */}
         <ContentSection>
           <Typography variant="h4" gutterBottom>
             Key Benefits
           </Typography>
-          <List>
-            {benefits.map((benefit, index) => (
-              <ListItem key={index}>
-                <ListItemIcon>
-                  <FiCheckCircle color="#1976d2" />
-                </ListItemIcon>
-                <ListItemText primary={benefit} />
-              </ListItem>
-            ))}
-          </List>
+          {benefits.map((benefit, index) => (
+            <Accordion
+              key={index}
+              expanded={expanded === index}
+              onChange={handleAccordionChange(index)}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>{benefit.key}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>{benefit.value}</Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
         </ContentSection>
       </Container>
     </Box>

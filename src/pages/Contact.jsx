@@ -13,7 +13,7 @@ import {
   Alert,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
+import { FiMail } from "react-icons/fi";
 
 // Hero Section Styling
 const HeroSection = styled(Box)(({ theme }) => ({
@@ -121,17 +121,17 @@ const ContactUsPage = () => {
               <Box sx={{ mt: 4 }}>
                 <ContactInfoItem>
                   <FiMail size={24} />
-                  <Typography>support@example.com</Typography>
+                  <Box>
+                    <Typography variant="body1">Neil Chamber</Typography>
+                    <Typography variant="body2">neil.chamber@example.com</Typography>
+                  </Box>
                 </ContactInfoItem>
                 <ContactInfoItem>
-                  <FiPhone size={24} />
-                  <Typography>+1 (555) 123-4567</Typography>
-                </ContactInfoItem>
-                <ContactInfoItem>
-                  <FiMapPin size={24} />
-                  <Typography>
-                    123 Business Street, Suite 100, City, State 12345
-                  </Typography>
+                  <FiMail size={24} />
+                  <Box>
+                    <Typography variant="body1">Brandon Deba</Typography>
+                    <Typography variant="body2">brandon.deba@example.com</Typography>
+                  </Box>
                 </ContactInfoItem>
               </Box>
             </Box>

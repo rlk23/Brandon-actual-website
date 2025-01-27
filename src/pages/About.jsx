@@ -1,21 +1,30 @@
-// src/pages/About.jsx
-import React from 'react';
-import { Box, Container, Typography, Grid, Paper } from '@mui/material';
-import { styled } from '@mui/system';
+import React, { useState } from "react";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Paper,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
+import { styled } from "@mui/system";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const HeroSection = styled(Box)(({ theme }) => ({
-  position: 'relative',
-  height: '50vh',
-  backgroundImage: 'url(/datacenter.jpg)', // Ensure the image is placed in the public folder
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: '#FFFFFF',
-  textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
-  [theme.breakpoints.down('sm')]: {
-    height: '30vh',
+  position: "relative",
+  height: "50vh",
+  backgroundImage: "url(/datacenter.jpg)", // Ensure the image is placed in the public folder
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "#FFFFFF",
+  textShadow: "2px 2px 4px rgba(0,0,0,0.7)",
+  [theme.breakpoints.down("sm")]: {
+    height: "30vh",
   },
 }));
 
@@ -25,14 +34,44 @@ const ContentSection = styled(Box)(({ theme }) => ({
 
 const SectionPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
-  backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  boxShadow: 'none',
-  [theme.breakpoints.down('sm')]: {
+  backgroundColor: "rgba(255, 255, 255, 0.8)",
+  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.12)", // Match Services accordion shadow
+  borderRadius: theme.spacing(1),
+  [theme.breakpoints.down("sm")]: {
     padding: theme.spacing(2),
   },
 }));
 
 const About = () => {
+  const [expanded, setExpanded] = useState(false);
+
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+  const coreValues = [
+    {
+      title: "Integrity",
+      description: "Transparency, trust, and accountability in everything we do.",
+    },
+    {
+      title: "Excellence",
+      description: "Rigorous data validation and seamless project execution.",
+    },
+    {
+      title: "Customer Focus",
+      description: "Tailored solutions that empower organizations to meet their goals confidently.",
+    },
+    {
+      title: "Security",
+      description: "Advanced protocols to safeguard sensitive data.",
+    },
+    {
+      title: "Innovation",
+      description: "Leveraging cutting-edge technology to modernize seismic data storage.",
+    },
+  ];
+
   return (
     <Box>
       {/* Hero Section */}
@@ -96,38 +135,25 @@ const About = () => {
                 <Typography variant="h4" gutterBottom>
                   Our Core Values
                 </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="h6">Integrity</Typography>
-                    <Typography variant="body2">
-                      Transparency, trust, and accountability in everything we do.
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="h6">Excellence</Typography>
-                    <Typography variant="body2">
-                      Rigorous data validation and seamless project execution.
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="h6">Customer Focus</Typography>
-                    <Typography variant="body2">
-                      Tailored solutions that empower organizations to meet their goals confidently.
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="h6">Security</Typography>
-                    <Typography variant="body2">
-                      Advanced protocols to safeguard sensitive data.
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="h6">Innovation</Typography>
-                    <Typography variant="body2">
-                      Leveraging cutting-edge technology to modernize seismic data storage.
-                    </Typography>
-                  </Grid>
-                </Grid>
+                {coreValues.map((value, index) => (
+                  <Accordion
+                    key={index}
+                    expanded={expanded === index}
+                    onChange={handleAccordionChange(index)}
+                    sx={{
+                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.12)", // Match Services accordion shadow
+                      borderRadius: 1,
+                      mb: 2,
+                    }}
+                  >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography variant="h6">{value.title}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography variant="body2">{value.description}</Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                ))}
               </SectionPaper>
             </Grid>
           </Grid>

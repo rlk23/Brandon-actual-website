@@ -2,19 +2,17 @@ import React, { useState } from "react";
 import {
   Box,
   Typography,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  Container,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-} from "@mui/material";
-import { FiCheckCircle } from "react-icons/fi";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+  Container,
+} from "@mui/material"; // Ensure List and ListItem are imported
 import { styled } from "@mui/system";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 // Hero Section Styling
 const HeroSection = styled(Box)(({ theme }) => ({
@@ -38,51 +36,45 @@ const ContentSection = styled(Box)(({ theme }) => ({
 }));
 
 const Services = () => {
-  const sections = [
+  const tapeMigrations = [
     {
-      title: "Tape Migrations",
-      items: [
-        "Tape Cataloging & Organization: Detailed inventory and organization of all tapes to be migrated.",
-        "Assessment of required tape devices and estimation of migration timelines.",
-      ],
+      title: "Tape Cataloging & Organization",
+      description:
+        "Detailed inventory and organization of all tapes to be migrated.",
+      image: "/cataloging.jpg", // Replace with an actual image path
     },
     {
       title: "Tape to Cloud Migration",
-      items: [
-        "Migration to major cloud providers: AWS, GCP, and Azure.",
-        "Data extraction, validation, and secure transfer to the chosen cloud platform.",
-        "Integration with existing cloud infrastructure and applications.",
-        "Implementation of data management strategies in the cloud (e.g., classification, retention, disaster recovery).",
-      ],
+      description:
+        "Migration to major cloud providers like AWS, GCP, and Azure, with secure data transfer.",
+      image: "/cloud-migration.jpg", // Replace with an actual image path
     },
     {
       title: "Tape to On-Prem Migration",
-      items: [
-        "Secure and efficient data movement to customer-owned on-premises storage locations.",
-      ],
+      description:
+        "Secure and efficient data movement to customer-owned on-premises storage.",
+      image: "/on-prem.jpg", // Replace with an actual image path
+    },
+  ];
+
+  const nonTapeMigrations = [
+    {
+      title: "On-Premises Data Migration",
+      description:
+        "Seamless migration from servers, NAS, and SAN to cloud or other on-premises storage.",
+      image: "/on-prem-migration.jpg", // Replace with an actual image path
     },
     {
-      title: "Media Independence",
-      items: [
-        "Support for a wide range of media types: 3590, 3592, LTO1–LTO9, hard disks, USB drives, optical media.",
-      ],
+      title: "Cloud-Based Solutions",
+      description:
+        "Secure storage tiers like Glacier for infrequent access and S3 for frequent access.",
+      image: "/cloud-based.jpg", // Replace with an actual image path
     },
     {
-      title: "Tape Cleanup & Disposal",
-      items: [
-        "Secure tape storage and disposal services (e.g., shredding, destruction).",
-        "Data validation and fail-back options with tape retention.",
-      ],
-    },
-    {
-      title: "Non-Tape Migrations",
-      items: [
-        "On-Premises Data Migration: Seamless migration of data from various on-premises storage systems (e.g., servers, NAS, SAN) to cloud or other on-premises locations.",
-        "Cloud-Based Solutions:",
-        "Seismic Shift Cloud: Secure and easily accessible cloud environment for data storage.",
-        "Options for various storage tiers (e.g., Glacier for infrequent access, S3 for frequent access).",
-        "Customer Cloud Environments: Migration to customer-managed cloud environments using provided credentials.",
-      ],
+      title: "Customer Cloud Environments",
+      description:
+        "Migration to customer-managed cloud environments with provided credentials.",
+      image: "/customer-cloud.jpg", // Replace with an actual image path
     },
   ];
 
@@ -124,30 +116,75 @@ const Services = () => {
         </Typography>
       </HeroSection>
 
-      {/* Services Section */}
-      <Container maxWidth="md">
+      {/* Tape Migrations Section */}
+      <Container maxWidth="lg">
         <ContentSection>
           <Typography variant="h4" gutterBottom>
-            Comprehensive Solutions for Seismic Data Management
+            Tape Migrations
           </Typography>
-          {sections.map((section, index) => (
-            <Box key={index} sx={{ mb: 4 }}>
-              <Typography variant="h5" sx={{ mb: 2 }}>
-                {section.title}
-              </Typography>
-              <List>
-                {section.items.map((item, idx) => (
-                  <ListItem key={idx}>
-                    <ListItemIcon>
-                      <FiCheckCircle color="#1976d2" />
-                    </ListItemIcon>
-                    <ListItemText primary={item} />
-                  </ListItem>
-                ))}
-              </List>
-              <Divider sx={{ mt: 2 }} />
-            </Box>
-          ))}
+          <Grid container spacing={4}>
+            {tapeMigrations.map((migration, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card
+                  sx={{
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                    transition: "transform 0.3s ease",
+                    "&:hover": { transform: "translateY(-8px)" },
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    height="160"
+                    image={migration.image}
+                    alt={migration.title}
+                  />
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      {migration.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {migration.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </ContentSection>
+
+        {/* Non-Tape Migrations Section */}
+        <ContentSection>
+          <Typography variant="h4" gutterBottom>
+            Non-Tape Migrations
+          </Typography>
+          <Grid container spacing={4}>
+            {nonTapeMigrations.map((migration, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Card
+                  sx={{
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                    transition: "transform 0.3s ease",
+                    "&:hover": { transform: "translateY(-8px)" },
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    height="160"
+                    image={migration.image}
+                    alt={migration.title}
+                  />
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      {migration.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {migration.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
         </ContentSection>
 
         {/* Key Benefits Section with Accordion */}

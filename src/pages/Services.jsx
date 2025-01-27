@@ -15,11 +15,10 @@ import {
 import { styled } from "@mui/system";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-// Hero Section Styling
 const HeroSection = styled(Box)(({ theme }) => ({
   position: "relative",
   height: "50vh",
-  backgroundImage: "url(/OilRig.jpg)", // Ensure this image is in the public folder
+  backgroundImage: "url(/OilRig.jpg)",
   backgroundSize: "cover",
   backgroundPosition: "center",
   display: "flex",
@@ -38,22 +37,38 @@ const ContentSection = styled(Box)(({ theme }) => ({
 
 const CarouselContainer = styled(Box)(({ theme }) => ({
   display: "flex",
-  overflowX: "auto", // Allow manual horizontal scrolling
+  overflowX: "auto",
   gap: theme.spacing(4),
+  scrollBehavior: "smooth",
   "&::-webkit-scrollbar": {
-    display: "none", // Hide scrollbar for aesthetics
+    display: "none",
   },
 }));
 
 const CarouselItem = styled(Card)(({ theme }) => ({
-  minWidth: "300px", // Fixed width for carousel cards
+  minWidth: "300px",
   boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
   transition: "transform 0.3s ease",
   "&:hover": { transform: "translateY(-8px)" },
 }));
 
+const DotsContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  marginTop: theme.spacing(2),
+}));
+
+const Dot = styled(Box)(({ theme, active }) => ({
+  width: "10px",
+  height: "10px",
+  borderRadius: "50%",
+  margin: "0 5px",
+  backgroundColor: active ? theme.palette.primary.main : "#ccc",
+}));
+
 const Services = () => {
   const carouselRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [expandedAccordion, setExpandedAccordion] = useState(false);
 
   const combinedServices = [
@@ -118,13 +133,20 @@ const Services = () => {
     { key: "Modernization", value: "Transition to a cutting-edge data storage infrastructure that supports future business growth." },
   ];
 
+  const handleScroll = () => {
+    if (carouselRef.current) {
+      const scrollLeft = carouselRef.current.scrollLeft;
+      const itemWidth = carouselRef.current.firstChild.offsetWidth + 16; // Include gap
+      setCurrentIndex(Math.round(scrollLeft / itemWidth));
+    }
+  };
+
   const handleAccordionChange = (panel) => (event, isExpanded) => {
     setExpandedAccordion(isExpanded ? panel : false);
   };
 
   return (
     <Box>
-      {/* Hero Section */}
       <HeroSection>
         <Typography variant="h2" component="h1">
           Our Services
@@ -132,7 +154,6 @@ const Services = () => {
       </HeroSection>
 
       <Container maxWidth="lg">
-        {/* Introduction Section */}
         <ContentSection>
           <Typography variant="h4" align="center" gutterBottom>
             Comprehensive Solutions for Seismic Data Management
@@ -145,12 +166,11 @@ const Services = () => {
           <Divider sx={{ my: 4 }} />
         </ContentSection>
 
-        {/* Carousel Section */}
         <ContentSection>
           <Typography variant="h4" gutterBottom>
             Tape Migrations
           </Typography>
-          <CarouselContainer ref={carouselRef}>
+          <CarouselContainer ref={carouselRef} onScroll={handleScroll}>
             {combinedServices.map((service, index) => (
               <CarouselItem key={index}>
                 <CardMedia
@@ -170,9 +190,13 @@ const Services = () => {
               </CarouselItem>
             ))}
           </CarouselContainer>
+          <DotsContainer>
+            {combinedServices.map((_, index) => (
+              <Dot key={index} active={index === currentIndex} />
+            ))}
+          </DotsContainer>
         </ContentSection>
 
-        {/* Non-Tape Migrations Section */}
         <ContentSection>
           <Typography variant="h4" gutterBottom>
             Non-Tape Migrations
@@ -207,7 +231,6 @@ const Services = () => {
           </Grid>
         </ContentSection>
 
-        {/* Key Benefits Section */}
         <ContentSection>
           <Typography variant="h4" gutterBottom>
             Key Benefits
@@ -217,7 +240,7 @@ const Services = () => {
               key={index}
               expanded={expandedAccordion === index}
               onChange={handleAccordionChange(index)}
-              sx={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)" }}
+              sx={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", mb: 2 }}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>{benefit.key}</Typography>

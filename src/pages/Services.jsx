@@ -188,25 +188,31 @@ const Services = () => {
         </ContentSection>
 
         {/* Key Benefits Section with Accordion */}
+        {/* Key Benefits Section with Accordion */}
         <ContentSection>
           <Typography variant="h4" gutterBottom>
             Key Benefits
           </Typography>
           {benefits.map((benefit, index) => (
-            <Accordion
-              key={index}
-              expanded={expanded === index}
-              onChange={handleAccordionChange(index)}
-            >
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{benefit.key}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{benefit.value}</Typography>
-              </AccordionDetails>
-            </Accordion>
+            <Box key={index} sx={{ mb: 4 }}> {/* Add margin bottom to create spacing */}
+              <Accordion
+                expanded={expanded === index}
+                onChange={handleAccordionChange(index)}
+                sx={{
+                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", // Optional: improve the visual look
+                }}
+              >
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>{benefit.key}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>{benefit.value}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            </Box>
           ))}
         </ContentSection>
+
       </Container>
     </Box>
   );

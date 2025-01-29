@@ -18,13 +18,15 @@ const Header = () => {
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* Logo and Branding */}
+        {/* Logo and Branding (Now Clickable) */}
         <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-          <img
-            src="/SeismicLogo3.png" // Ensure the image is in the public folder
-            alt="Seismic Logo"
-            style={{ height: "60px", width: "auto", maxWidth: "200px", marginRight: "15px" }} // Increased width
-          />
+          <RouterLink to="/" style={{ textDecoration: "none" }}>
+            <img
+              src="/SeismicLogo3.png" // Ensure the image is in the public folder
+              alt="Seismic Logo"
+              style={{ height: "60px", width: "auto", maxWidth: "200px", marginRight: "15px", cursor: "pointer" }} // Added cursor pointer
+            />
+          </RouterLink>
           <Typography
             variant="h6"
             component="div"

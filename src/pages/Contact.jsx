@@ -13,7 +13,8 @@ import {
   Alert,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { FiMail } from "react-icons/fi";
+import { FiMail, FiPhone } from "react-icons/fi";
+import emailjs from "emailjs-com";
 
 // Hero Section Styling
 const HeroSection = styled(Box)(({ theme }) => ({
@@ -61,6 +62,10 @@ const AnimatedTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+const SERVICE_ID = "";  // Replace with your EmailJS Service ID
+const TEMPLATE_ID = "";  // Replace with your EmailJS Template ID
+const USER_ID = "";  // Replace with your EmailJS User ID
+
 const ContactUsPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -84,8 +89,16 @@ const ContactUsPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    setOpenSnackbar(true);
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, formData, USER_ID)
+      .then((response) => {
+        console.log("SUCCESS!", response.status, response.text);
+        setOpenSnackbar(true);
+      })
+      .catch((error) => {
+        console.error("FAILED...", error);
+      });
+
     setFormData({
       name: "",
       company: "",
@@ -122,15 +135,13 @@ const ContactUsPage = () => {
                 <ContactInfoItem>
                   <FiMail size={24} />
                   <Box>
-                    <Typography variant="body1">Neil Chamber</Typography>
-                    <Typography variant="body2">neil.chamber@example.com</Typography>
+                    <Typography variant="body1">Info@seismicshift.net</Typography>
                   </Box>
                 </ContactInfoItem>
                 <ContactInfoItem>
-                  <FiMail size={24} />
+                  <FiPhone size={24} />
                   <Box>
-                    <Typography variant="body1">Brandon Deba</Typography>
-                    <Typography variant="body2">brandon.deba@example.com</Typography>
+                    <Typography variant="body1">832-458-1208</Typography>
                   </Box>
                 </ContactInfoItem>
               </Box>

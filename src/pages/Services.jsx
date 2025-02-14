@@ -2,18 +2,20 @@ import React, { useState, useRef } from "react";
 import {
   Box,
   Typography,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
+  Container,
+  Divider,
+  IconButton,
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Container,
-  Divider,
+  Card,
+  CardMedia,
+  CardContent,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const HeroSection = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -35,94 +37,54 @@ const ContentSection = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4, 0),
 }));
 
-const CarouselContainer = styled(Box)(({ theme }) => ({
+const CarouselWrapper = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "relative",
+});
+
+const CarouselContainer = styled(Box)({
   display: "flex",
   overflowX: "auto",
-  gap: theme.spacing(4),
   scrollBehavior: "smooth",
-  "&::-webkit-scrollbar": {
-    display: "none",
-  },
-}));
+  width: "100%",
+  maxWidth: "900px",
+});
 
-const CarouselItem = styled(Card)(({ theme }) => ({
+const CarouselItem = styled(Card)({
   minWidth: "300px",
+  maxWidth: "300px",
   boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
   transition: "transform 0.3s ease",
+  margin: "0 10px",
   "&:hover": { transform: "translateY(-8px)" },
-}));
+});
 
-const DotsContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  marginTop: theme.spacing(2),
-}));
-
-const Dot = styled(Box)(({ theme, active }) => ({
-  width: "10px",
-  height: "10px",
-  borderRadius: "50%",
-  margin: "0 5px",
-  backgroundColor: active ? theme.palette.primary.main : "#ccc",
-}));
+const GridItem = styled(Card)({
+  flex: "0 0 calc(33.33% - 20px)",
+  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+  transition: "transform 0.3s ease",
+  margin: "0 10px",
+  "&:hover": { transform: "translateY(-8px)" },
+});
 
 const Services = () => {
   const carouselRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [expandedAccordion, setExpandedAccordion] = useState(false);
+  const [expanded, setExpanded] = useState(null);
 
   const combinedServices = [
-    {
-      title: "Tape Cataloging & Organization",
-      description:
-        "Detailed inventory and organization of all tapes to be migrated.",
-      image: "/cataloging.jpg",
-    },
-    {
-      title: "Tape to Cloud Migration",
-      description:
-        "Migration to major cloud providers like AWS, GCP, and Azure, with secure data transfer.",
-      image: "/cloud-migration.jpg",
-    },
-    {
-      title: "Tape to On-Prem Migration",
-      description:
-        "Secure and efficient data movement to customer-owned on-premises storage.",
-      image: "/on-prem.jpg",
-    },
-    {
-      title: "Media Independence",
-      description:
-        "Support for a wide range of media types: 3590, 3592, LTO1–LTO9, hard disks, USB drives, optical media.",
-      image: "/media-independence.jpg",
-    },
-    {
-      title: "Tape Cleanup & Disposal",
-      description:
-        "Secure tape storage and disposal services (e.g., shredding, destruction). Data validation and fail-back options with tape retention.",
-      image: "/tape-cleanup.jpg",
-    },
+    { title: "Tape Cataloging & Organization", description: "Detailed inventory and organization of all tapes to be migrated.", image: "/cataloging.jpg" },
+    { title: "Tape to Cloud Migration", description: "Migration to major cloud providers like AWS, GCP, and Azure, with secure data transfer.", image: "/cloud-migration.jpg" },
+    { title: "Tape to On-Prem Migration", description: "Secure and efficient data movement to customer-owned on-premises storage.", image: "/on-prem.jpg" },
+    { title: "Media Independence", description: "Support for a wide range of media types: 3590, 3592, LTO1–LTO9, hard disks, USB drives, optical media.", image: "/media-independence.jpg" },
+    { title: "Tape Cleanup & Disposal", description: "Secure tape storage and disposal services (e.g., shredding, destruction). Data validation and fail-back options with tape retention.", image: "/tape-cleanup.jpg" },
   ];
 
   const nonTapeMigrations = [
-    {
-      title: "On-Premises Data Migration",
-      description:
-        "Seamless migration from servers, NAS, and SAN to cloud or other on-premises storage.",
-      image: "/on-prem-migration.jpg",
-    },
-    {
-      title: "Cloud-Based Solutions",
-      description:
-        "Secure storage tiers like Glacier for infrequent access and S3 for frequent access.",
-      image: "/cloud-based.jpg",
-    },
-    {
-      title: "Customer Cloud Environments",
-      description:
-        "Migration to customer-managed cloud environments with provided credentials.",
-      image: "/customer-cloud.jpg",
-    },
+    { title: "On-Premises Data Migration", description: "Seamless migration from servers, NAS, and SAN to cloud or other on-premises storage.", image: "/on-prem-migration.jpg" },
+    { title: "Cloud-Based Solutions", description: "Secure storage tiers like Glacier for infrequent access and S3 for frequent access.", image: "/cloud-based.jpg" },
+    { title: "Customer Cloud Environments", description: "Migration to customer-managed cloud environments with provided credentials.", image: "/customer-cloud.jpg" },
   ];
 
   const benefits = [
@@ -133,16 +95,15 @@ const Services = () => {
     { key: "Modernization", value: "Transition to a cutting-edge data storage infrastructure that supports future business growth." },
   ];
 
-  const handleScroll = () => {
+  const handleScroll = (direction) => {
     if (carouselRef.current) {
-      const scrollLeft = carouselRef.current.scrollLeft;
-      const itemWidth = carouselRef.current.firstChild.offsetWidth + 16; // Include gap
-      setCurrentIndex(Math.round(scrollLeft / itemWidth));
+      const scrollAmount = 350; // Adjusted scroll distance
+      carouselRef.current.scrollLeft += direction === "left" ? -scrollAmount : scrollAmount;
     }
   };
 
   const handleAccordionChange = (panel) => (event, isExpanded) => {
-    setExpandedAccordion(isExpanded ? panel : false);
+    setExpanded(isExpanded ? panel : false);
   };
 
   return (
@@ -159,94 +120,77 @@ const Services = () => {
             Comprehensive Solutions for Seismic Data Management
           </Typography>
           <Typography variant="body1" align="center" color="text.secondary">
-            Explore our range of tape and non-tape migration services tailored
-            to your business needs. Modernize your data storage and improve
-            operational efficiency.
+            Explore our range of tape and non-tape migration services tailored to your business needs. Modernize your data storage and improve operational efficiency.
           </Typography>
           <Divider sx={{ my: 4 }} />
         </ContentSection>
 
+        {/* Tape Migrations Section with Arrows */}
         <ContentSection>
           <Typography variant="h4" gutterBottom>
             Tape Migrations
           </Typography>
-          <CarouselContainer ref={carouselRef} onScroll={handleScroll}>
-            {combinedServices.map((service, index) => (
-              <CarouselItem key={index}>
-                <CardMedia
-                  component="img"
-                  height="160"
-                  image={service.image}
-                  alt={service.title}
-                />
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    {service.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {service.description}
-                  </Typography>
-                </CardContent>
-              </CarouselItem>
-            ))}
-          </CarouselContainer>
-          <DotsContainer>
-            {combinedServices.map((_, index) => (
-              <Dot key={index} active={index === currentIndex} />
-            ))}
-          </DotsContainer>
+          <CarouselWrapper>
+            <IconButton onClick={() => handleScroll("left")}>
+              <ArrowBackIosIcon />
+            </IconButton>
+            <CarouselContainer ref={carouselRef}>
+              {combinedServices.map((service, index) => (
+                <CarouselItem key={index}>
+                  <CardMedia component="img" height="160" image={service.image} alt={service.title} />
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>
+                      {service.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {service.description}
+                    </Typography>
+                  </CardContent>
+                </CarouselItem>
+              ))}
+            </CarouselContainer>
+            <IconButton onClick={() => handleScroll("right")}>
+              <ArrowForwardIosIcon />
+            </IconButton>
+          </CarouselWrapper>
         </ContentSection>
 
+        {/* Non-Tape Migrations (Static Grid) */}
         <ContentSection>
           <Typography variant="h4" gutterBottom>
             Non-Tape Migrations
           </Typography>
-          <Grid container spacing={4}>
+          <Box display="flex" justifyContent="center" flexWrap="wrap" gap={2} maxWidth="1200px" mx="auto">
             {nonTapeMigrations.map((migration, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card
-                  sx={{
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                    transition: "transform 0.3s ease",
-                    "&:hover": { transform: "translateY(-8px)" },
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    height="160"
-                    image={migration.image}
-                    alt={migration.title}
-                  />
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      {migration.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {migration.description}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+              <GridItem key={index}>
+                <CardMedia component="img" height="160" image={migration.image} alt={migration.title} />
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    {migration.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {migration.description}
+                  </Typography>
+                </CardContent>
+              </GridItem>
             ))}
-          </Grid>
+          </Box>
         </ContentSection>
 
+        {/* Key Benefits with Collapsible Sections */}
         <ContentSection>
           <Typography variant="h4" gutterBottom>
             Key Benefits
           </Typography>
           {benefits.map((benefit, index) => (
-            <Accordion
-              key={index}
-              expanded={expandedAccordion === index}
-              onChange={handleAccordionChange(index)}
-              sx={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", mb: 2 }}
-            >
+            <Accordion key={index} expanded={expanded === index} onChange={handleAccordionChange(index)} sx={{ boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", mb: 2 }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{benefit.key}</Typography>
+                <Typography variant="h6">{benefit.key}</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>{benefit.value}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {benefit.value}
+                </Typography>
               </AccordionDetails>
             </Accordion>
           ))}

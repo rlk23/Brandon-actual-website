@@ -74,11 +74,11 @@ const Services = () => {
   const [expanded, setExpanded] = useState(null);
 
   const combinedServices = [
-    { title: "Tape Cataloging & Organization", description: "Detailed inventory and organization of all tapes to be migrated.", image: "/cataloging.jpg" },
-    { title: "Tape to Cloud Migration", description: "Migration to major cloud providers like AWS, GCP, and Azure, with secure data transfer.", image: "/cloud-migration.jpg" },
-    { title: "Tape to On-Prem Migration", description: "Secure and efficient data movement to customer-owned on-premises storage.", image: "/on-prem.jpg" },
-    { title: "Media Independence", description: "Support for a wide range of media types: 3590, 3592, LTO1–LTO9, hard disks, USB drives, optical media.", image: "/media-independence.jpg" },
-    { title: "Tape Cleanup & Disposal", description: "Secure tape storage and disposal services (e.g., shredding, destruction). Data validation and fail-back options with tape retention.", image: "/tape-cleanup.jpg" },
+    { title: "Tape Cataloging & Organization", description: "Detailed inventory and organization of all tapes to be migrated.", image: "/SortingMigration.jpg" },
+    { title: "Tape to Cloud Migration", description: "Migration to major cloud providers like AWS, GCP, and Azure, with secure data transfer.", image: "/cloud.jpg" },
+    { title: "Tape to On-Prem Migration", description: "Secure and efficient data movement to customer-owned on-premises storage.", image: "/secureData.jpg" },
+    { title: "Media Independence", description: "Support for a wide range of media types: 3590, 3592, LTO1–LTO9, hard disks, USB drives, optical media.", image: "/alltypesMedia.jpg" },
+    { title: "Tape Cleanup & Disposal", description: "Secure tape storage and disposal services (e.g., shredding, destruction). Data validation and fail-back options with tape retention.", image: "/cloud-cleanup.jpg" },
   ];
 
   const nonTapeMigrations = [

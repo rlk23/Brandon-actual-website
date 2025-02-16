@@ -82,9 +82,9 @@ const Services = () => {
   ];
 
   const nonTapeMigrations = [
-    { title: "On-Premises Data Migration", description: "Seamless migration from servers, NAS, and SAN to cloud or other on-premises storage.", image: "/on-prem-migration.jpg" },
-    { title: "Cloud-Based Solutions", description: "Secure storage tiers like Glacier for infrequent access and S3 for frequent access.", image: "/cloud-based.jpg" },
-    { title: "Customer Cloud Environments", description: "Migration to customer-managed cloud environments with provided credentials.", image: "/customer-cloud.jpg" },
+    { title: "On-Premises Data Migration", description: "Seamless migration from servers, NAS, and SAN to cloud or other on-premises storage.", image: "/OnPremise.jpg" },
+    { title: "Cloud-Based Solutions", description: "Secure storage tiers like Glacier for infrequent access and S3 for frequent access.", image: "/cloud_based.jpg" },
+    { title: "Customer Cloud Environments", description: "Migration to customer-managed cloud environments with provided credentials.", image: "/customerCloud.jpg" },
   ];
 
   const benefits = [

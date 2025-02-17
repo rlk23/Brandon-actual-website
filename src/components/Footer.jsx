@@ -49,16 +49,15 @@ const Footer = () => {
           <Typography variant="h6" gutterBottom>
             Contact
           </Typography>
-          <Typography variant="body2">Email: support@example.com</Typography>
-          <Typography variant="body2">Phone: +1 (555) 123-4567</Typography>
-          <Typography variant="body2">Address: 123 Business Street, Suite 100</Typography>
+          <Typography variant="body2">Email: Info@seismicshift.net</Typography>
+          <Typography variant="body2">Phone: +1 (832)-458-1208</Typography>
         </Grid>
       </Grid>
 
       {/* Copyright Section */}
       <Box sx={{ textAlign: 'center', mt: 4 }}>
         <Typography variant="body2">
-          © {new Date().getFullYear()} Your Company. All rights reserved.
+          © {new Date().getFullYear()} Seismic Shift. All rights reserved.
         </Typography>
       </Box>
     </Box>

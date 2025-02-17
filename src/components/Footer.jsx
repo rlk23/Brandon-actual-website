@@ -49,7 +49,12 @@ const Footer = () => {
           <Typography variant="h6" gutterBottom>
             Contact
           </Typography>
-          <Typography variant="body2">Email: Info@seismicshift.net</Typography>
+          <Typography variant="body2">
+            Email:{' '}
+            <Link href="mailto:Info@seismicshift.net" color="inherit" underline="hover">
+              Info@seismicshift.net
+            </Link>
+          </Typography>
           <Typography variant="body2">Phone: +1 (832)-458-1208</Typography>
         </Grid>
       </Grid>

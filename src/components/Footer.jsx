@@ -1,12 +1,13 @@
-import React from 'react';
-import { Box, Typography, Link, Grid } from '@mui/material';
+import React from "react";
+import { Box, Typography, Grid, Link as MuiLink } from "@mui/material";
+import { Link } from "react-router-dom"; // Import React Router Link
 
 const Footer = () => {
   return (
     <Box
       sx={{
-        backgroundColor: '#333', // Dark background
-        color: '#FFFFFF', // White text
+        backgroundColor: "#333", // Dark background
+        color: "#FFFFFF", // White text
         py: 4, // Vertical padding
         px: 2, // Horizontal padding
         mt: 8, // Margin at the top
@@ -29,16 +30,16 @@ const Footer = () => {
             Quick Links
           </Typography>
           <Box>
-            <Link href="/" color="inherit" underline="hover" sx={{ display: 'block', mb: 1 }}>
+            <Link to="/" style={linkStyle} className="footer-link">
               Home
             </Link>
-            <Link href="/about" color="inherit" underline="hover" sx={{ display: 'block', mb: 1 }}>
+            <Link to="/about" style={linkStyle} className="footer-link">
               About Us
             </Link>
-            <Link href="/services" color="inherit" underline="hover" sx={{ display: 'block', mb: 1 }}>
+            <Link to="/services" style={linkStyle} className="footer-link">
               Services
             </Link>
-            <Link href="/contact" color="inherit" underline="hover" sx={{ display: 'block', mb: 1 }}>
+            <Link to="/contact" style={linkStyle} className="footer-link">
               Contact Us
             </Link>
           </Box>
@@ -50,23 +51,39 @@ const Footer = () => {
             Contact
           </Typography>
           <Typography variant="body2">
-            Email:{' '}
-            <Link href="mailto:Info@seismicshift.net" color="inherit" underline="hover">
+            Email:{" "}
+            <MuiLink
+              href="mailto:Info@seismicshift.net"
+              color="inherit"
+              underline="hover"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Info@seismicshift.net
-            </Link>
+            </MuiLink>
           </Typography>
           <Typography variant="body2">Phone: +1 (832)-458-1208</Typography>
         </Grid>
       </Grid>
 
       {/* Copyright Section */}
-      <Box sx={{ textAlign: 'center', mt: 4 }}>
+      <Box sx={{ textAlign: "center", mt: 4 }}>
         <Typography variant="body2">
           © {new Date().getFullYear()} Seismic Shift. All rights reserved.
         </Typography>
       </Box>
     </Box>
   );
+};
+
+// Custom styles for React Router Links
+const linkStyle = {
+  display: "block",
+  color: "inherit",
+  textDecoration: "none",
+  marginBottom: "8px",
+  transition: "color 0.3s ease",
+  position: "relative",
 };
 
 export default Footer;
